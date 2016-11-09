@@ -76,7 +76,7 @@ func main() {
 	)
 
 	sf := handler.NewSnowflake(machineID, default_namespace, uuidKey, consulAddr)
-	proto.RegisterSnowflakeServiceHandler(service.Server(), sf)
+	proto.RegisterSnowflakeHandler(service.Server(), sf)
 
 	if err := service.Run(); err != nil {
 		log.Fatal(err)

@@ -9,7 +9,10 @@ It is generated from these files:
 	snowflake.proto
 
 It has these top-level messages:
-	Snowflake
+	Key
+	Value
+	NullRequest
+	UUID
 */
 package snowflake
 
@@ -34,55 +37,46 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Snowflake struct {
-}
-
-func (m *Snowflake) Reset()                    { *m = Snowflake{} }
-func (m *Snowflake) String() string            { return proto.CompactTextString(m) }
-func (*Snowflake) ProtoMessage()               {}
-func (*Snowflake) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
-
-type Snowflake_Key struct {
+type Key struct {
 	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 }
 
-func (m *Snowflake_Key) Reset()                    { *m = Snowflake_Key{} }
-func (m *Snowflake_Key) String() string            { return proto.CompactTextString(m) }
-func (*Snowflake_Key) ProtoMessage()               {}
-func (*Snowflake_Key) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 0} }
+func (m *Key) Reset()                    { *m = Key{} }
+func (m *Key) String() string            { return proto.CompactTextString(m) }
+func (*Key) ProtoMessage()               {}
+func (*Key) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-type Snowflake_Value struct {
+type Value struct {
 	Value int64 `protobuf:"varint,1,opt,name=value" json:"value,omitempty"`
 }
 
-func (m *Snowflake_Value) Reset()                    { *m = Snowflake_Value{} }
-func (m *Snowflake_Value) String() string            { return proto.CompactTextString(m) }
-func (*Snowflake_Value) ProtoMessage()               {}
-func (*Snowflake_Value) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 1} }
+func (m *Value) Reset()                    { *m = Value{} }
+func (m *Value) String() string            { return proto.CompactTextString(m) }
+func (*Value) ProtoMessage()               {}
+func (*Value) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-type Snowflake_NullRequest struct {
+type NullRequest struct {
 }
 
-func (m *Snowflake_NullRequest) Reset()                    { *m = Snowflake_NullRequest{} }
-func (m *Snowflake_NullRequest) String() string            { return proto.CompactTextString(m) }
-func (*Snowflake_NullRequest) ProtoMessage()               {}
-func (*Snowflake_NullRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 2} }
+func (m *NullRequest) Reset()                    { *m = NullRequest{} }
+func (m *NullRequest) String() string            { return proto.CompactTextString(m) }
+func (*NullRequest) ProtoMessage()               {}
+func (*NullRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
-type Snowflake_UUID struct {
+type UUID struct {
 	Uuid uint64 `protobuf:"varint,1,opt,name=uuid" json:"uuid,omitempty"`
 }
 
-func (m *Snowflake_UUID) Reset()                    { *m = Snowflake_UUID{} }
-func (m *Snowflake_UUID) String() string            { return proto.CompactTextString(m) }
-func (*Snowflake_UUID) ProtoMessage()               {}
-func (*Snowflake_UUID) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 3} }
+func (m *UUID) Reset()                    { *m = UUID{} }
+func (m *UUID) String() string            { return proto.CompactTextString(m) }
+func (*UUID) ProtoMessage()               {}
+func (*UUID) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func init() {
-	proto.RegisterType((*Snowflake)(nil), "snowflake.Snowflake")
-	proto.RegisterType((*Snowflake_Key)(nil), "snowflake.Snowflake.Key")
-	proto.RegisterType((*Snowflake_Value)(nil), "snowflake.Snowflake.Value")
-	proto.RegisterType((*Snowflake_NullRequest)(nil), "snowflake.Snowflake.NullRequest")
-	proto.RegisterType((*Snowflake_UUID)(nil), "snowflake.Snowflake.UUID")
+	proto.RegisterType((*Key)(nil), "snowflake.Key")
+	proto.RegisterType((*Value)(nil), "snowflake.Value")
+	proto.RegisterType((*NullRequest)(nil), "snowflake.NullRequest")
+	proto.RegisterType((*UUID)(nil), "snowflake.UUID")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -90,34 +84,34 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Client API for SnowflakeService service
+// Client API for Snowflake service
 
-type SnowflakeServiceClient interface {
-	Next(ctx context.Context, in *Snowflake_Key, opts ...client.CallOption) (*Snowflake_Value, error)
-	GetUUID(ctx context.Context, in *Snowflake_NullRequest, opts ...client.CallOption) (*Snowflake_UUID, error)
+type SnowflakeClient interface {
+	Next(ctx context.Context, in *Key, opts ...client.CallOption) (*Value, error)
+	GetUUID(ctx context.Context, in *NullRequest, opts ...client.CallOption) (*UUID, error)
 }
 
-type snowflakeServiceClient struct {
+type snowflakeClient struct {
 	c           client.Client
 	serviceName string
 }
 
-func NewSnowflakeServiceClient(serviceName string, c client.Client) SnowflakeServiceClient {
+func NewSnowflakeClient(serviceName string, c client.Client) SnowflakeClient {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(serviceName) == 0 {
 		serviceName = "snowflake"
 	}
-	return &snowflakeServiceClient{
+	return &snowflakeClient{
 		c:           c,
 		serviceName: serviceName,
 	}
 }
 
-func (c *snowflakeServiceClient) Next(ctx context.Context, in *Snowflake_Key, opts ...client.CallOption) (*Snowflake_Value, error) {
-	req := c.c.NewRequest(c.serviceName, "SnowflakeService.Next", in)
-	out := new(Snowflake_Value)
+func (c *snowflakeClient) Next(ctx context.Context, in *Key, opts ...client.CallOption) (*Value, error) {
+	req := c.c.NewRequest(c.serviceName, "Snowflake.Next", in)
+	out := new(Value)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -125,9 +119,9 @@ func (c *snowflakeServiceClient) Next(ctx context.Context, in *Snowflake_Key, op
 	return out, nil
 }
 
-func (c *snowflakeServiceClient) GetUUID(ctx context.Context, in *Snowflake_NullRequest, opts ...client.CallOption) (*Snowflake_UUID, error) {
-	req := c.c.NewRequest(c.serviceName, "SnowflakeService.GetUUID", in)
-	out := new(Snowflake_UUID)
+func (c *snowflakeClient) GetUUID(ctx context.Context, in *NullRequest, opts ...client.CallOption) (*UUID, error) {
+	req := c.c.NewRequest(c.serviceName, "Snowflake.GetUUID", in)
+	out := new(UUID)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -135,44 +129,43 @@ func (c *snowflakeServiceClient) GetUUID(ctx context.Context, in *Snowflake_Null
 	return out, nil
 }
 
-// Server API for SnowflakeService service
+// Server API for Snowflake service
 
-type SnowflakeServiceHandler interface {
-	Next(context.Context, *Snowflake_Key, *Snowflake_Value) error
-	GetUUID(context.Context, *Snowflake_NullRequest, *Snowflake_UUID) error
+type SnowflakeHandler interface {
+	Next(context.Context, *Key, *Value) error
+	GetUUID(context.Context, *NullRequest, *UUID) error
 }
 
-func RegisterSnowflakeServiceHandler(s server.Server, hdlr SnowflakeServiceHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&SnowflakeService{hdlr}, opts...))
+func RegisterSnowflakeHandler(s server.Server, hdlr SnowflakeHandler, opts ...server.HandlerOption) {
+	s.Handle(s.NewHandler(&Snowflake{hdlr}, opts...))
 }
 
-type SnowflakeService struct {
-	SnowflakeServiceHandler
+type Snowflake struct {
+	SnowflakeHandler
 }
 
-func (h *SnowflakeService) Next(ctx context.Context, in *Snowflake_Key, out *Snowflake_Value) error {
-	return h.SnowflakeServiceHandler.Next(ctx, in, out)
+func (h *Snowflake) Next(ctx context.Context, in *Key, out *Value) error {
+	return h.SnowflakeHandler.Next(ctx, in, out)
 }
 
-func (h *SnowflakeService) GetUUID(ctx context.Context, in *Snowflake_NullRequest, out *Snowflake_UUID) error {
-	return h.SnowflakeServiceHandler.GetUUID(ctx, in, out)
+func (h *Snowflake) GetUUID(ctx context.Context, in *NullRequest, out *UUID) error {
+	return h.SnowflakeHandler.GetUUID(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("snowflake.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 196 bytes of a gzipped FileDescriptorProto
+	// 179 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x2f, 0xce, 0xcb, 0x2f,
 	0x4f, 0xcb, 0x49, 0xcc, 0x4e, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x84, 0x0b, 0x28,
-	0x15, 0x70, 0x71, 0x06, 0xc3, 0x38, 0x52, 0x92, 0x5c, 0xcc, 0xde, 0xa9, 0x95, 0x42, 0x42, 0x5c,
-	0x2c, 0x79, 0x89, 0xb9, 0xa9, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x60, 0xb6, 0x94, 0x2c,
-	0x17, 0x6b, 0x58, 0x62, 0x4e, 0x69, 0xaa, 0x90, 0x08, 0x17, 0x6b, 0x19, 0x88, 0x01, 0x96, 0x65,
-	0x0e, 0x82, 0x70, 0xa4, 0x78, 0xb9, 0xb8, 0xfd, 0x4a, 0x73, 0x72, 0x82, 0x52, 0x0b, 0x4b, 0x53,
-	0x8b, 0x4b, 0xa4, 0xa4, 0xb8, 0x58, 0x42, 0x43, 0x3d, 0x5d, 0x40, 0x26, 0x95, 0x96, 0x66, 0xa6,
-	0x80, 0xd5, 0xb2, 0x04, 0x81, 0xd9, 0x46, 0x33, 0x18, 0xb9, 0x04, 0xe0, 0x56, 0x06, 0xa7, 0x16,
-	0x95, 0x65, 0x26, 0xa7, 0x0a, 0xd9, 0x70, 0xb1, 0xf8, 0xa5, 0x56, 0x94, 0x08, 0x49, 0xe8, 0x21,
-	0xdc, 0x0a, 0x57, 0xa4, 0xe7, 0x9d, 0x5a, 0x29, 0x25, 0x85, 0x55, 0x06, 0xe2, 0x26, 0x37, 0x2e,
-	0x76, 0xf7, 0xd4, 0x12, 0xb0, 0x8d, 0x0a, 0x58, 0x95, 0x21, 0xbb, 0x4d, 0x12, 0xab, 0x0a, 0x90,
-	0xe6, 0x24, 0x36, 0x70, 0xf0, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x32, 0x98, 0x60, 0x62,
-	0x31, 0x01, 0x00, 0x00,
+	0x49, 0x72, 0x31, 0x7b, 0xa7, 0x56, 0x0a, 0x09, 0x71, 0xb1, 0xe4, 0x25, 0xe6, 0xa6, 0x4a, 0x30,
+	0x2a, 0x30, 0x6a, 0x70, 0x06, 0x81, 0xd9, 0x4a, 0xb2, 0x5c, 0xac, 0x61, 0x89, 0x39, 0xa5, 0xa9,
+	0x42, 0x22, 0x5c, 0xac, 0x65, 0x20, 0x06, 0x58, 0x96, 0x39, 0x08, 0xc2, 0x51, 0xe2, 0xe5, 0xe2,
+	0xf6, 0x2b, 0xcd, 0xc9, 0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x51, 0x92, 0xe2, 0x62, 0x09,
+	0x0d, 0xf5, 0x74, 0x01, 0x99, 0x54, 0x5a, 0x9a, 0x99, 0x02, 0x56, 0xcb, 0x12, 0x04, 0x66, 0x1b,
+	0x65, 0x72, 0x71, 0x06, 0xc3, 0x6c, 0x14, 0xd2, 0xe0, 0x62, 0xf1, 0x4b, 0xad, 0x28, 0x11, 0xe2,
+	0xd3, 0x43, 0x38, 0xcb, 0x3b, 0xb5, 0x52, 0x4a, 0x00, 0x89, 0x0f, 0xb1, 0xd7, 0x88, 0x8b, 0xdd,
+	0x3d, 0xb5, 0x04, 0x6c, 0xaa, 0x18, 0x92, 0x24, 0x92, 0xad, 0x52, 0xfc, 0x48, 0xe2, 0x20, 0x85,
+	0x49, 0x6c, 0x60, 0x1f, 0x1a, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x3e, 0x68, 0xdf, 0xf5, 0xf4,
+	0x00, 0x00, 0x00,
 }

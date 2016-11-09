@@ -110,7 +110,7 @@ func (p *snowflake) initMachineID() {
 }
 
 // Next is get next value of a key, like auto-incrememt in mysql
-func (p *snowflake) Next(ctx context.Context, in *proto.Snowflake_Key, out *proto.Snowflake_Value) error {
+func (p *snowflake) Next(ctx context.Context, in *proto.Key, out *proto.Value) error {
 	key := p.ns + in.Name
 	for {
 		// get the key
@@ -144,7 +144,7 @@ func (p *snowflake) Next(ctx context.Context, in *proto.Snowflake_Key, out *prot
 }
 
 // GetUUID is generate an unique uuid
-func (p *snowflake) GetUUID(ctx context.Context, req *proto.Snowflake_NullRequest, rsp *proto.Snowflake_UUID) error {
+func (p *snowflake) GetUUID(ctx context.Context, req *proto.NullRequest, rsp *proto.UUID) error {
 	q := make(chan uint64, 1)
 	p.procCh <- q
 	rsp.Uuid = <-q
