@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/hashicorp/consul/api"
+	"time"
+
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
-	"github.com/unicok/misc/log"
-	"github.com/unicok/snowflake/handler"
-	proto "github.com/unicok/snowflake/proto/snowflake"
 
-	context "golang.org/x/net/context"
+	"github.com/unicok/misc/log"
+	"github.com/unicok/snowflake-srv/handler"
+	proto "github.com/unicok/snowflake-srv/proto/snowflake"
 )
 
 const (
@@ -16,19 +16,12 @@ const (
 	default_uuidKey   = "snowflake-uuid"
 )
 
-func fromContext(ctx context.Context) (*api.Client, bool) {
-	s, ok := ctx.Value(api.Client{}).(*api.Client)
-	return s, ok
-}
-
-func newContext(ctx context.Context, s *api.Client) context.Context {
-	return context.WithValue(ctx, api.Client{}, s)
-}
-
 func main() {
 	service := micro.NewService(
 		micro.Name("com.unicok.srv.snowflake"),
 		micro.Version("latest"),
+		micro.RegisterTTL(time.Minute),
+		micro.RegisterInterval(time.Second*30),
 
 		micro.Flags(
 			cli.StringFlag{

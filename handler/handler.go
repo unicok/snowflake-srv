@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"errors"
 	"fmt"
 	"math/rand"
 	"os"
@@ -9,11 +8,13 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/unicok/misc/log"
-	proto "github.com/unicok/snowflake/proto/snowflake"
-
 	"github.com/hashicorp/consul/api"
+	"github.com/micro/go-micro/errors"
+	"github.com/micro/go-micro/server"
 	"golang.org/x/net/context"
+
+	"github.com/unicok/misc/log"
+	proto "github.com/unicok/snowflake-srv/proto/snowflake"
 )
 
 const (
@@ -116,15 +117,13 @@ func (p *snowflake) Next(ctx context.Context, in *proto.Key, out *proto.Value) e
 		// get the key
 		kvpair, _, err := p.kv.Get(key, nil)
 		if err != nil || kvpair == nil {
-			log.Fatal(err)
-			return errors.New("Key not exists, need to create first")
+			return errors.BadRequest(server.DefaultOptions().Name+".next", "Key not exists, need to create first")
 		}
 
 		// get prevValue & prevIndex
 		prevValue, err := strconv.Atoi(Bytes2Str(kvpair.Value))
 		if err != nil {
-			log.Fatal(err)
-			return errors.New("marlformed value")
+			return errors.InternalServerError(server.DefaultOptions().Name+".next", err.Error())
 		}
 		prevIndex := kvpair.ModifyIndex
 
