@@ -1,5 +1,7 @@
 # SNOWFLAKE
 
+[![Build Status](https://travis-ci.org/unicok/snowflake.svg?branch=master)](https://travis-ci.org/unicok/snowflake)
+
 Snowfalke 是分布式uuid发生器，twitter snowflake的go语言版本
 
 ## Getting started
