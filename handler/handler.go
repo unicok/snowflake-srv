@@ -3,16 +3,16 @@ package handler
 import (
 	"errors"
 	"fmt"
-	"log"
 	"math/rand"
 	"os"
 	"strconv"
 	"time"
 	"unsafe"
 
-	"github.com/hashicorp/consul/api"
+	"github.com/unicok/misc/log"
 	proto "github.com/unicok/snowflake/proto/snowflake"
 
+	"github.com/hashicorp/consul/api"
 	"golang.org/x/net/context"
 )
 
@@ -60,10 +60,10 @@ func NewSnowflake(mcid, ns, uuidKey, addr string) *snowflake {
 		}
 
 		p.machineID = (uint64(id) & machineIDMask) << 12
-		log.Println("machine id from env specified:", p.machineID)
+		log.Info("machine id from env specified:", p.machineID)
 	} else {
 		p.initMachineID()
-		log.Println("machine id from kv specified:", p.machineID)
+		log.Info("machine id from kv specified:", p.machineID)
 	}
 
 	go p.uuidTask()
@@ -116,7 +116,7 @@ func (p *snowflake) Next(ctx context.Context, in *proto.Snowflake_Key, out *prot
 		// get the key
 		kvpair, _, err := p.kv.Get(key, nil)
 		if err != nil || kvpair == nil {
-			// log.Fatal(err)
+			log.Fatal(err)
 			return errors.New("Key not exists, need to create first")
 		}
 

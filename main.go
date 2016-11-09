@@ -1,16 +1,14 @@
 package main
 
 import (
-	"log"
-
 	"github.com/hashicorp/consul/api"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
+	"github.com/unicok/misc/log"
+	"github.com/unicok/snowflake/handler"
 	proto "github.com/unicok/snowflake/proto/snowflake"
 
 	context "golang.org/x/net/context"
-
-	"github.com/unicok/snowflake/handler"
 )
 
 const (
