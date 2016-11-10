@@ -61,7 +61,6 @@ func main() {
 				consulAddr = c.String("consul_address")
 			}
 
-			machineID = ""
 			if len(c.String("machine_id")) > 0 {
 				machineID = c.String("machine_id")
 			}
