@@ -1,6 +1,6 @@
 # SNOWFLAKE
 
-[![Build Status](https://travis-ci.org/unicok/snowflake.svg?branch=master)](https://travis-ci.org/unicok/snowflake)
+[![Build Status](https://travis-ci.org/unicok/snowflake-srv.svg?branch=master)](https://travis-ci.org/unicok/snowflake-srv)
 
 Snowfalke 是分布式uuid发生器，twitter snowflake的go语言版本
 
@@ -19,8 +19,8 @@ Snowfalke 是分布式uuid发生器，twitter snowflake的go语言版本
 4. Download and start the service
 
 	```shell
-	go get github.com/unicok/snowflake
-	./snowflake
+	go get github.com/unicok/snowflake-srv
+	./snowflake-srv
 	```
 
 ## The API

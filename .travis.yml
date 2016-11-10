@@ -8,10 +8,10 @@ install:
 
 script:
     - go vet -x
-    - go vet -x github.com/unicok/snowflake
+    - go vet -x github.com/unicok/snowflake-srv
     - go install
-    - go install github.com/unicok/snowflake
-    - go test -race -coverprofile=coverage.txt -covermode=atomic -v github.com/unicok/snowflake
+    - go install github.com/unicok/snowflake-srv
+    - go test -race -coverprofile=coverage.txt -covermode=atomic -v github.com/unicok/snowflake-srv
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
