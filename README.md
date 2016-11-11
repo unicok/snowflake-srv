@@ -1,8 +1,9 @@
-# SNOWFLAKE
+# Snowflake
 
 [![Build Status](https://travis-ci.org/unicok/snowflake-srv.svg?branch=master)](https://travis-ci.org/unicok/snowflake-srv)
 
-Snowfalke 是分布式uuid发生器，twitter snowflake的go语言版本
+[Snowflake](https://github.com/twitter/snowflake) is a network service for generating unique ID numbers at high scale with some simple guarantees. http://twitter.com/
+This is a go language version based on [Consul KV](https://github.com/hashicorp/consul)
 
 ## Getting started
 
@@ -27,7 +28,11 @@ Snowfalke 是分布式uuid发生器，twitter snowflake的go语言版本
 - GetUUID
 - Next       
 
-uuid格式为:
+UUID is composed of:
+	* unused - 1 bit 
+	* time - 41 bits (millisecond precision w/ a custom epoch gives us 69 years)
+  	* configured machine id - 10 bits - gives us up to 1024 machines
+  	* sequence number - 12 bits - rolls over every 4096 per machine (with protection to avoid rollover in the same ms)
 
     +-------------------------------------------------------------------------------------------------+
     | UNUSED(1BIT) |         TIMESTAMP(41BIT)           |  MACHINE-ID(10BIT)  |   SERIAL-NO(12BIT)    |
