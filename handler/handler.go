@@ -90,7 +90,7 @@ func (p *snowflake) initMachineID() {
 		checkErrPanic(err)
 
 		// get preValue & preIndex
-		prevValue, err := strconv.Atoi(Bytes2Str(kvpair.Value))
+		prevValue, err := strconv.ParseUint(bytes2Str(kvpair.Value), 10, 64)
 		checkErrPanic(err)
 		prevIndex := kvpair.ModifyIndex
 
@@ -121,7 +121,7 @@ func (p *snowflake) Next(ctx context.Context, in *proto.Key, out *proto.Value) e
 		}
 
 		// get prevValue & prevIndex
-		prevValue, err := strconv.Atoi(Bytes2Str(kvpair.Value))
+		prevValue, err := strconv.Atoi(bytes2Str(kvpair.Value))
 		if err != nil {
 			return errors.InternalServerError(server.DefaultOptions().Name+".next", err.Error())
 		}
@@ -215,12 +215,12 @@ func checkErrPanic(err error) {
 	}
 }
 
-func Str2Bytes(s string) []byte {
+func str2Bytes(s string) []byte {
 	x := (*[2]uintptr)(unsafe.Pointer(&s))
 	h := [3]uintptr{x[0], x[1], x[1]}
 	return *(*[]byte)(unsafe.Pointer(&h))
 }
 
-func Bytes2Str(b []byte) string {
+func bytes2Str(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }

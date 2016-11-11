@@ -28,12 +28,11 @@ This is a go language version based on [Consul KV](https://github.com/hashicorp/
 - GetUUID
 - Next       
 
-UUID is composed of:
-	* unused - 1 bit 
-	* time - 41 bits (millisecond precision w/ a custom epoch gives us 69 years)
-  	* configured machine id - 10 bits - gives us up to 1024 machines
-  	* sequence number - 12 bits - rolls over every 4096 per machine (with protection to avoid rollover in the same ms)
+### UUID:
+- unused - 1 bit 
+- time - 41 bits (millisecond precision w/ a custom epoch gives us 69 years)
+- configured machine id - 10 bits - gives us up to 1024 machines
+- sequence number - 12 bits - rolls over every 4096 per machine (with protection to avoid rollover in the same ms)
 
-    +-------------------------------------------------------------------------------------------------+
-    | UNUSED(1BIT) |         TIMESTAMP(41BIT)           |  MACHINE-ID(10BIT)  |   SERIAL-NO(12BIT)    |
-    +-------------------------------------------------------------------------------------------------+ 
+
+	|-- UNUSED(1BIT) --|-- TIMESTAMP(41BIT) --|--  MACHINE-ID(10BIT) --|--  SERIAL-NO(12BIT) --|
